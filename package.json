@@ -14,5 +14,13 @@
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "mongoose": "^8.13.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Naga-Pavan-Bhuma/campus_pulse_backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Naga-Pavan-Bhuma/campus_pulse_backend/issues"
+  },
+  "homepage": "https://github.com/Naga-Pavan-Bhuma/campus_pulse_backend#readme"
 }
