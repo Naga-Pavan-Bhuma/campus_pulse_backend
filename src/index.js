@@ -3,9 +3,13 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const authRoutes = require("./routes/auth");
+const clubRouter = require("./routes/club");
 const session = require('express-session');
 const passport = require('passport');
+const timetableRouter = require('./routes/timetable');
 require("./config/passport");
+
+
 
 dotenv.config();
 
@@ -26,7 +30,16 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 // Routes
-app.use('/', authRoutes);
+try {
+  app.use("/", clubRouter);
+
+  app.use('/', authRoutes);
+
+
+} catch (err) {
+  console.log(err.message);
+}
+app.use('/timetable', timetableRouter);
 
 // Connect to DB and start server
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

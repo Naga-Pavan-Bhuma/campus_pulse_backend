@@ -1,0 +1,123 @@
+[
+    {
+      "department": "CSE",
+      "classes": [
+        {
+          "class": "CSE-A",
+          "timetable": {
+            "Monday": ["Math", "Physics", "English", "Break", "C++", "DSA"],
+            "Tuesday": ["Math", "English", "Physics", "Break", "C++", "DSA"],
+            "Wednesday": ["DSA", "Physics", "Math", "Break", "English", "C++"],
+            "Thursday": ["Math", "C++", "DSA", "Break", "Physics", "English"],
+            "Friday": ["English", "DSA", "Math", "Break", "Physics", "C++"],
+            "Saturday": ["Lab", "Lab", "Lab", "Break", "Sports", "Library"]
+          }
+        },
+        {
+          "class": "CSE-B",
+          "timetable": {
+            "Monday": ["Math", "Physics", "Chemistry", "Break", "Java", "DSA"],
+            "Tuesday": ["Math", "English", "Chemistry", "Break", "Java", "DSA"],
+            "Wednesday": ["DSA", "Physics", "Math", "Break", "English", "Java"],
+            "Thursday": ["Math", "Java", "DSA", "Break", "Physics", "Chemistry"],
+            "Friday": ["English", "DSA", "Math", "Break", "Physics", "Java"],
+            "Saturday": ["Lab", "Lab", "Lab", "Break", "Sports", "Library"]
+          }
+        },
+        {
+          "class": "CSE-C",
+          "timetable": {
+            "Monday": ["Math", "Physics", "History", "Break", "C++", "DSA"],
+            "Tuesday": ["Math", "English", "History", "Break", "C++", "DSA"],
+            "Wednesday": ["DSA", "Physics", "Math", "Break", "English", "C++"],
+            "Thursday": ["Math", "C++", "DSA", "Break", "Physics", "History"],
+            "Friday": ["English", "DSA", "Math", "Break", "Physics", "C++"],
+            "Saturday": ["Lab", "Lab", "Lab", "Break", "Sports", "Library"]
+          }
+        },
+        {
+          "class": "CSE-D",
+          "timetable": {
+            "Monday": ["Math", "Physics", "Geography", "Break", "C++", "DSA"],
+            "Tuesday": ["Math", "English", "Geography", "Break", "C++", "DSA"],
+            "Wednesday": ["DSA", "Physics", "Math", "Break", "English", "C++"],
+            "Thursday": ["Math", "C++", "DSA", "Break", "Physics", "Geography"],
+            "Friday": ["English", "DSA", "Math", "Break", "Physics", "C++"],
+            "Saturday": ["Lab", "Lab", "Lab", "Break", "Sports", "Library"]
+          }
+        },
+        {
+          "class": "CSE-E",
+          "timetable": {
+            "Monday": ["Math", "Physics", "Literature", "Break", "C++", "DSA"],
+            "Tuesday": ["Math", "English", "Literature", "Break", "C++", "DSA"],
+            "Wednesday": ["DSA", "Physics", "Math", "Break", "English", "C++"],
+            "Thursday": ["Math", "C++", "DSA", "Break", "Physics", "Literature"],
+            "Friday": ["English", "DSA", "Math", "Break", "Physics", "C++"],
+            "Saturday": ["Lab", "Lab", "Lab", "Break", "Sports", "Library"]
+          }
+        }
+      ]
+    },
+    {
+      "department": "ECE",
+      "classes": [
+        {
+          "class": "ECE-A",
+          "timetable": {
+            "Monday": ["Math", "Physics", "Electronics", "Break", "Circuit Theory", "Signals"],
+            "Tuesday": ["Math", "English", "Electronics", "Break", "Circuit Theory", "Signals"],
+            "Wednesday": ["Signals", "Physics", "Math", "Break", "English", "Circuit Theory"],
+            "Thursday": ["Math", "Circuit Theory", "Signals", "Break", "Physics", "Electronics"],
+            "Friday": ["English", "Signals", "Math", "Break", "Physics", "Circuit Theory"],
+            "Saturday": ["Lab", "Lab", "Lab", "Break", "Sports", "Library"]
+          }
+        },
+        {
+          "class": "ECE-B",
+          "timetable": {
+            "Monday": ["Math", "Physics", "Electronics", "Break", "Microprocessor", "Digital Logic"],
+            "Tuesday": ["Math", "English", "Electronics", "Break", "Microprocessor", "Digital Logic"],
+            "Wednesday": ["Digital Logic", "Physics", "Math", "Break", "English", "Microprocessor"],
+            "Thursday": ["Math", "Microprocessor", "Digital Logic", "Break", "Physics", "Electronics"],
+            "Friday": ["English", "Digital Logic", "Math", "Break", "Physics", "Microprocessor"],
+            "Saturday": ["Lab", "Lab", "Lab", "Break", "Sports", "Library"]
+          }
+        },
+        {
+          "class": "ECE-C",
+          "timetable": {
+            "Monday": ["Math", "Physics", "Electronics", "Break", "Circuit Theory", "Signals"],
+            "Tuesday": ["Math", "English", "Electronics", "Break", "Circuit Theory", "Signals"],
+            "Wednesday": ["Signals", "Physics", "Math", "Break", "English", "Circuit Theory"],
+            "Thursday": ["Math", "Circuit Theory", "Signals", "Break", "Physics", "Electronics"],
+            "Friday": ["English", "Signals", "Math", "Break", "Physics", "Circuit Theory"],
+            "Saturday": ["Lab", "Lab", "Lab", "Break", "Sports", "Library"]
+          }
+        },
+        {
+          "class": "ECE-D",
+          "timetable": {
+            "Monday": ["Math", "Physics", "Electronics", "Break", "Electromagnetics", "Signals"],
+            "Tuesday": ["Math", "English", "Electronics", "Break", "Electromagnetics", "Signals"],
+            "Wednesday": ["Signals", "Physics", "Math", "Break", "English", "Electromagnetics"],
+            "Thursday": ["Math", "Electromagnetics", "Signals", "Break", "Physics", "Electronics"],
+            "Friday": ["English", "Signals", "Math", "Break", "Physics", "Electromagnetics"],
+            "Saturday": ["Lab", "Lab", "Lab", "Break", "Sports", "Library"]
+          }
+        },
+        {
+          "class": "ECE-E",
+          "timetable": {
+            "Monday": ["Math", "Physics", "Electronics", "Break", "Microprocessor", "Signals"],
+            "Tuesday": ["Math", "English", "Electronics", "Break", "Microprocessor", "Signals"],
+            "Wednesday": ["Signals", "Physics", "Math", "Break", "English", "Microprocessor"],
+            "Thursday": ["Math", "Microprocessor", "Signals", "Break", "Physics", "Electronics"],
+            "Friday": ["English", "Signals", "Math", "Break", "Physics", "Microprocessor"],
+            "Saturday": ["Lab", "Lab", "Lab", "Break", "Sports", "Library"]
+          }
+        }
+      ]
+    }
+  ]
+  
