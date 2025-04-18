@@ -63,7 +63,7 @@ const loginUser = async (req, res) => {
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-
+    res.cookie('token', token); // 1 hour expiration
     res.json({ token });
   } catch (err) {
     console.error(err.message);

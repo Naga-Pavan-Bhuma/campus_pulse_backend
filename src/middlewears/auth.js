@@ -9,6 +9,7 @@ require("dotenv").config();
 const studentAuth = async (req, res, next) => {
   try {
     const token = req.cookies.token;
+    console.log("token",token);
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
@@ -28,6 +29,7 @@ const studentAuth = async (req, res, next) => {
 const facultyAuth = async (req, res, next) => {
   try {
     const token = req.cookies.token;
+    console.log("token",token);
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
@@ -47,6 +49,7 @@ const facultyAuth = async (req, res, next) => {
 const adminAuth = async (req, res, next) => {
   try {
     const token = req.cookies.token;
+    console.log("token",token);
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);

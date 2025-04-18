@@ -7,6 +7,8 @@ const clubRouter = require("./routes/club");
 const session = require('express-session');
 const passport = require('passport');
 const timetableRouter = require('./routes/timetable');
+const cookieParser = require('cookie-parser');
+const announcementRouter = require('./routes/announcements');
 require("./config/passport");
 
 
@@ -27,12 +29,13 @@ app.use(
   })
 );
 
+app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 // Routes
 try {
   app.use("/", clubRouter);
-
+  app.use("/", announcementRouter)
   app.use('/', authRoutes);
 
 
