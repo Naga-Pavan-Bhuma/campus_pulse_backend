@@ -9,6 +9,10 @@ const passport = require('passport');
 const timetableRouter = require('./routes/timetable');
 const cookieParser = require('cookie-parser');
 const announcementRouter = require('./routes/announcements');
+
+
+const academicCalendarRouter = require('./routes/academicCalendar');
+
 require("./config/passport");
 
 
@@ -32,6 +36,8 @@ app.use(
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/academiccalendar', academicCalendarRouter);
+
 // Routes
 try {
   app.use("/", clubRouter);
@@ -55,11 +61,12 @@ app.get("/user", async (req, res) => {
 // Connect to DB and start server
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
+    console.log('Connected to MongoDB successfully');
     app.listen(5000, () => {
       console.log('Server running on port 5000');
     });
   })
   .catch(err => {
-    console.error(err.message);
-    process.exit(1);
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1);  // Terminate the app if there's an error connecting to the DB
   });
