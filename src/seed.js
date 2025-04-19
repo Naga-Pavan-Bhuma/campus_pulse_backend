@@ -18,9 +18,10 @@ const seedDB = async () => {
 
       for (const cls of dept.classes) {
         const className = cls.class;
+        const year = cls.year; // Extracting the year from the data
         const timetable = cls.timetable;
 
-        timetableDocs.push({ department, className, timetable });
+        timetableDocs.push({ department, className, year, timetable });
       }
     }
 

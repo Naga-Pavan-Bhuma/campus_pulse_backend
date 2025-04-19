@@ -3,10 +3,17 @@ const Timetable = require('../models/timetable'); // Import the Timetable model
 // Controller to get timetable
 exports.getTimetable = async (req, res) => {
   try {
-    const { department, className } = req.params; // Get department and class from params
+    const { department, className, year } = req.params; // Get department, class, and year from params
 
-    // Find the timetable for the requested department and class
-    const timetable = await Timetable.findOne({ department, className });
+    // Log the received parameters for debugging
+    console.log(`Request received with department: ${department}, class: ${className}, year: ${year}`);
+
+    // Query to find the timetable for the requested department, class, and year
+    const timetable = await Timetable.findOne({ 
+      department, 
+      className, 
+      year 
+    });
 
     if (!timetable) {
       return res.status(404).json({ message: 'Timetable not found' });
@@ -15,7 +22,7 @@ exports.getTimetable = async (req, res) => {
     // Return the timetable data as JSON
     return res.json(timetable.timetable);
   } catch (err) {
-    console.error(err.message);
+    console.error('Error fetching timetable:', err.message);
     res.status(500).json({ message: 'Server error' });
   }
 };
