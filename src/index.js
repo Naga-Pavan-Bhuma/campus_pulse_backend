@@ -6,12 +6,10 @@ const authRoutes = require("./routes/auth");
 const clubRouter = require("./routes/club");
 const session = require('express-session');
 const passport = require('passport');
-const timetableRouter = require('./routes/timetable');
 const cookieParser = require('cookie-parser');
 const announcementRouter = require('./routes/announcements');
-require("./config/passport");
-
-
+const timetableRouter = require('./routes/timetable'); // Original timetable router
+const facultyTimetableRouter = require('./routes/facultyTimetable'); // New router for faculty timetable
 
 dotenv.config();
 
@@ -32,17 +30,16 @@ app.use(
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
+
 // Routes
-try {
-  app.use("/", clubRouter);
-  app.use("/", announcementRouter)
-  app.use('/', authRoutes);
+app.use("/", clubRouter);
+app.use("/", announcementRouter);
+app.use('/', authRoutes);
 
+// Use the appropriate routes
+app.use('/timetable', timetableRouter); // Original timetable routes
+app.use('/faculty-timetable', facultyTimetableRouter); // New route for faculty timetable
 
-} catch (err) {
-  console.log(err.message);
-}
-app.use('/timetable', timetableRouter);
 app.get("/user", async (req, res) => {
   if (!req.user) {
     return res.status(401).json({ message: "User not authenticated" });
