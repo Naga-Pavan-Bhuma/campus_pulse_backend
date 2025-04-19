@@ -6,14 +6,16 @@ const authRoutes = require("./routes/auth");
 const clubRouter = require("./routes/club");
 const session = require('express-session');
 const passport = require('passport');
-const timetableRouter = require('./routes/timetable');
 const cookieParser = require('cookie-parser');
 const announcementRouter = require('./routes/announcements');
 const messMenuRouter = require('./routes/menu');
 
-require("./config/passport");
 
 
+const academicCalendarRouter = require('./routes/academicCalendar');
+
+const timetableRouter = require('./routes/timetable'); // Original timetable router
+const facultyTimetableRouter = require('./routes/facultyTimetable'); // New router for faculty timetable
 
 dotenv.config();
 
@@ -39,14 +41,11 @@ try {
   app.use("/", clubRouter);
   app.use("/", announcementRouter)
   app.use('/', authRoutes);
-  app.use("/", messMenuRouter);
-  
 
+// Use the appropriate routes
+app.use('/timetable', timetableRouter); // Original timetable routes
+app.use('/faculty-timetable', facultyTimetableRouter); // New route for faculty timetable
 
-} catch (err) {
-  console.log(err.message);
-}
-app.use('/timetable', timetableRouter);
 app.get("/user", async (req, res) => {
   if (!req.user) {
     return res.status(401).json({ message: "User not authenticated" });
@@ -59,11 +58,12 @@ app.get("/user", async (req, res) => {
 // Connect to DB and start server
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
+    console.log('Connected to MongoDB successfully');
     app.listen(5000, () => {
       console.log('Server running on port 5000');
     });
   })
   .catch(err => {
-    console.error(err.message);
-    process.exit(1);
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1);  // Terminate the app if there's an error connecting to the DB
   });
