@@ -64,6 +64,43 @@ authRouter.post("/signup", async (req, res) => {
     res.status(400).send(err.message);
   }
 });
+authRouter.post("/student/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    const isMatch = await user.isValidPassword(password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const token = await user.getJWT();
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax", // Use "None" if frontend and backend are on different domains with HTTPS
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+    });
+    // Send only what is needed
+    const userData = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role,
+      _id: user._id,
+    };
+
+    res.status(200).json({ message: "Login successful", user: userData });
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
 authRouter.post("/faculty/register", async (req, res) => {
   try {
     const { facultyId, password } = req.body;
@@ -150,9 +187,14 @@ authRouter.post("/verify-otp", async (req, res) => {
     res.status(400).send(err.message);
   }
 });
-authRouter.post("/logout", async (req, res) => {
-  res.cookie("token", null, { expires: new Date(Date.now()) });
-  res.send("Successfully Logout");
+authRouter.get("/logout", (req, res) => {
+  req.logout(() => {
+    req.session.destroy(() => {
+      res.clearCookie("connect.sid");
+      res.clearCookie("token");
+      res.send({ message: "Logged out" });
+    });
+  });
 });
 
 authRouter.get("/me", async (req, res) => {

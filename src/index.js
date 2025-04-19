@@ -43,6 +43,14 @@ try {
   console.log(err.message);
 }
 app.use('/timetable', timetableRouter);
+app.get("/user", async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ message: "User not authenticated" });
+  }
+
+  const { firstName, lastName, email, photoUrl } = req.user;
+  res.json({ firstName, lastName, email, photoUrl });
+});
 
 // Connect to DB and start server
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

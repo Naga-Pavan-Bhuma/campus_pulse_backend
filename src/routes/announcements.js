@@ -4,7 +4,7 @@ const express = require("express");
 const announcementRouter = express.Router();
 
 // Get all announcements
-announcementRouter.get("/annoucements", async (req, res) => {
+announcementRouter.get("/announcements", async (req, res) => {
     try {
         const announcements = await Announcement.find().sort({ createdAt: -1 });
         res.status(200).json(announcements);
@@ -14,7 +14,7 @@ announcementRouter.get("/annoucements", async (req, res) => {
 });
 
 // Get a single announcement by ID
-announcementRouter.get("/annoucements/:id", async (req, res) => {
+announcementRouter.get("/announcements/:id", async (req, res) => {
     try {
         const announcement = await Announcement.findById(req.params.id);
         if (!announcement) return res.status(404).json({ error: "Not found" });
@@ -26,7 +26,7 @@ announcementRouter.get("/annoucements/:id", async (req, res) => {
 
 
 // Create a new announcement (Only accessible by Faculty or Admin)
-announcementRouter.post("/annoucements", facultyAuth, async (req, res) => {
+announcementRouter.post("/announcements", facultyAuth, async (req, res) => {
     try {
         const { faculty } = req;
         const { title, content, audience } = req.body;
@@ -52,7 +52,7 @@ announcementRouter.post("/annoucements", facultyAuth, async (req, res) => {
 });
 
 // Delete an announcement (Only accessible by Admin)
-announcementRouter.delete("/annoucements/:id", async (req, res) => {
+announcementRouter.delete("/announcements/:id", async (req, res) => {
     try {
         const deletedAnnouncement = await Announcement.findByIdAndDelete(
             req.params.id
