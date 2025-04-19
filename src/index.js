@@ -10,6 +10,8 @@ const cookieParser = require('cookie-parser');
 const announcementRouter = require('./routes/announcements');
 const messMenuRouter = require('./routes/menu');
 require("./config/passport");
+const facultyRoutes = require("./routes/faculty");
+
 
 const academicCalendarRouter = require('./routes/academicCalendar');
 
@@ -41,6 +43,7 @@ app.use('/academiccalendar', academicCalendarRouter);
 app.use("/", clubRouter);
 app.use("/", announcementRouter);
 app.use('/', authRoutes);
+app.use("/", facultyRoutes);
 app.use("/", messMenuRouter);
 
 // Use the appropriate routes

@@ -22,5 +22,20 @@ router.get('/menu', async (req, res) => {
     res.status(500).json({ error: 'Server Error' });
   }
 });
+// Update menu data
+router.put('/menu', async (req, res) => {
+  try {
+    const updatedMenu = await MessMenu.findOneAndUpdate(
+      {},
+      { Mess1: req.body.Mess1 }, // Replace with your menu structure key
+      { new: true, upsert: true }
+    );
+
+    res.json({ message: "Menu updated successfully", updatedMenu });
+  } catch (err) {
+    console.error('Error updating mess menu:', err.message);
+    res.status(500).json({ error: 'Failed to update menu' });
+  }
+});
 
 module.exports = router;

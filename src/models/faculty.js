@@ -16,7 +16,7 @@ const facultySchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: false,
   },
   isRegistered: {
     type: Boolean,
