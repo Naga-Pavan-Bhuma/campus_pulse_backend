@@ -9,6 +9,8 @@ const passport = require('passport');
 const timetableRouter = require('./routes/timetable');
 const cookieParser = require('cookie-parser');
 const announcementRouter = require('./routes/announcements');
+const messMenuRouter = require('./routes/menu');
+
 require("./config/passport");
 
 
@@ -37,6 +39,8 @@ try {
   app.use("/", clubRouter);
   app.use("/", announcementRouter)
   app.use('/', authRoutes);
+  app.use("/", messMenuRouter);
+  
 
 
 } catch (err) {
