@@ -41,6 +41,8 @@ try {
   app.use("/", clubRouter);
   app.use("/", announcementRouter)
   app.use('/', authRoutes);
+  app.use("/", messMenuRouter);
+  
 
 // Use the appropriate routes
 app.use('/timetable', timetableRouter); // Original timetable routes
