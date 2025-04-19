@@ -9,8 +9,7 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const announcementRouter = require('./routes/announcements');
 const messMenuRouter = require('./routes/menu');
-
-
+require("./config/passport");
 
 const academicCalendarRouter = require('./routes/academicCalendar');
 
@@ -36,13 +35,13 @@ app.use(
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/academiccalendar', academicCalendarRouter);
 // Routes
-try {
-  app.use("/", clubRouter);
-  app.use("/", announcementRouter)
-  app.use('/', authRoutes);
-  app.use("/", messMenuRouter);
-  
+
+app.use("/", clubRouter);
+app.use("/", announcementRouter);
+app.use('/', authRoutes);
+app.use("/", messMenuRouter);
 
 // Use the appropriate routes
 app.use('/timetable', timetableRouter); // Original timetable routes
