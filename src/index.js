@@ -39,7 +39,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/academiccalendar', academicCalendarRouter);
 // Routes
-<<<<<<< HEAD
 
 app.use("/", clubRouter);
 app.use("/", announcementRouter);
@@ -47,7 +46,6 @@ app.use('/', authRoutes);
 app.use("/", facultyRoutes);
 app.use("/", messMenuRouter);
 
-=======
 try {
   app.use("/", clubRouter);
   app.use("/", announcementRouter)
@@ -57,7 +55,6 @@ try {
 }catch (err) {
   console.error("Error while setting up routes:", err.message);
 }
->>>>>>> 15f46f8 (Academic Calendar added)
 // Use the appropriate routes
 app.use('/timetable', timetableRouter); // Original timetable routes
 app.use('/faculty-timetable', facultyTimetableRouter); // New route for faculty timetable
