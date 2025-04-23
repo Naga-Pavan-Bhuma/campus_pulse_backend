@@ -3,7 +3,7 @@ const router = express.Router();
 const Event = require('../models/event');
 
 // GET all events
-router.get('/', async (req, res) => {
+router.get('/events', async (req, res) => {
   try {
     const events = await Event.find().sort({ date: 1 });
     res.json(events);
@@ -12,15 +12,49 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Optional: POST to add events (for admin use)
-router.post('/', async (req, res) => {
+// POST: Add new event (admin use)
+router.post('/events', async (req, res) => {
   const { title, date, location } = req.body;
+
+  if (!title || !date || !location) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
   try {
-    const newEvent = new Event({ title, date, location });
-    await newEvent.save();
-    res.status(201).json(newEvent);
-  } catch (error) {
-    res.status(400).json({ message: "Error creating event: " + error.message });
+    const newEvent = await Event.create({ title, date, location });
+    res.status(201).json({ message: 'Event added', event: newEvent });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to create event' });
+  }
+});
+
+// DELETE: Remove an event by ID
+router.delete('/events/:id', async (req, res) => {
+  try {
+    const deleted = await Event.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+    res.json({ message: 'Event deleted', event: deleted });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete event' });
+  }
+});
+
+// PUT: Update event by ID
+router.put('/events/:id', async (req, res) => {
+  const { title, date, location } = req.body;
+
+  try {
+    const updated = await Event.findByIdAndUpdate(
+      req.params.id,
+      { title, date, location },
+      { new: true }
+    );
+    if (!updated) return res.status(404).json({ error: 'Event not found' });
+    res.json({ message: 'Event updated', event: updated });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update event' });
   }
 });
 
