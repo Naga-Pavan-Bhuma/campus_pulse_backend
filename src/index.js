@@ -11,8 +11,8 @@ const announcementRouter = require('./routes/announcements');
 const messMenuRouter = require('./routes/menu');
 require("./config/passport");
 const facultyRoutes = require("./routes/faculty");
-
-
+const eventRoutes = require("./routes/events");
+const examScheduleRoutes = require('./routes/examSchedule');
 const academicCalendarRouter = require('./routes/academicCalendar');
 
 const timetableRouter = require('./routes/timetable'); // Original timetable router
@@ -44,7 +44,8 @@ app.use("/", announcementRouter);
 app.use('/', authRoutes);
 app.use("/", facultyRoutes);
 app.use("/", messMenuRouter);
-
+app.use('/events', eventRoutes);
+app.use('/', examScheduleRoutes);
 // Use the appropriate routes
 app.use('/timetable', timetableRouter); // Original timetable routes
 app.use('/faculty-timetable', facultyTimetableRouter); // New route for faculty timetable
