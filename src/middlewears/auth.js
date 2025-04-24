@@ -9,7 +9,6 @@ require("dotenv").config();
 const studentAuth = async (req, res, next) => {
   try {
     const token = req.cookies.token;
-    console.log("token",token);
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
@@ -21,6 +20,9 @@ const studentAuth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ message: "Token expired, please login again" });
+    }
     res.status(400).json({ message: error.message });
   }
 };
@@ -29,7 +31,6 @@ const studentAuth = async (req, res, next) => {
 const facultyAuth = async (req, res, next) => {
   try {
     const token = req.cookies.token;
-    console.log("token",token);
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
@@ -41,6 +42,9 @@ const facultyAuth = async (req, res, next) => {
     req.faculty = faculty;
     next();
   } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ message: "Token expired, please login again" });
+    }
     res.status(400).json({ message: error.message });
   }
 };
@@ -49,7 +53,6 @@ const facultyAuth = async (req, res, next) => {
 const adminAuth = async (req, res, next) => {
   try {
     const token = req.cookies.token;
-    console.log("token",token);
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
@@ -61,6 +64,9 @@ const adminAuth = async (req, res, next) => {
     req.admin = admin;
     next();
   } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ message: "Token expired, please login again" });
+    }
     res.status(400).json({ message: error.message });
   }
 };
