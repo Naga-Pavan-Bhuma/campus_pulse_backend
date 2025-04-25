@@ -16,6 +16,18 @@ const adminSchema = new mongoose.Schema({
   },
 });
 
+// 🔒 Hash password before saving
+adminSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
 // 🔑 Generate JWT Token
 adminSchema.methods.getJWT = function () {
   return jwt.sign({ _id: this._id, role: "admin" }, process.env.JWT_SECRET, {

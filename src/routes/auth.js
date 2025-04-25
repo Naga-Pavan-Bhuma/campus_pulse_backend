@@ -170,6 +170,32 @@ authRouter.post("/admin/login", async (req, res) => {
   }
 });
 
+authRouter.post("/admin/signup", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Check if the email already exists
+    const existingAdmin = await Admin.findOne({ email });
+    if (existingAdmin) {
+      return res.status(400).send("Admin with this email already exists");
+    }
+
+    // Create new admin
+    const newAdmin = new Admin({ email, password});
+    await newAdmin.save();
+
+    // Generate JWT token
+    const token = await newAdmin.getJWT();
+
+    // Send token in cookie
+    res.cookie("token", token, { expires: new Date(Date.now() + 900000), httpOnly: true });
+    res.status(201).send(newAdmin);
+  } catch (err) {
+    res.status(500).send("ERROR: " + err.message);
+  }
+});
+
+
 // OTP Verification
 authRouter.post("/verify-otp", async (req, res) => {
   try {
