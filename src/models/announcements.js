@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const announcementSchema = new mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
-    postedBy: { type: String }, // Can be Faculty or Admin
+    postedBy: { type: String },
     userType: { type: String, enum: ["Faculty", "Admin"], required: true },
     audience: {
         type: [String],
