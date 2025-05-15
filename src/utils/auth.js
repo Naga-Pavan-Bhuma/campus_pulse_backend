@@ -6,8 +6,10 @@ export const useLogout = () => {
 
   const logout = async () => {
     try {
-      await axios.get("http://localhost:5000/auth/logout", { withCredentials: true });
-      navigate("/login"); // Or "/" based on your flow
+      await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth/logout`, {
+        withCredentials: true,
+      });
+            navigate("/login"); 
     } catch (err) {
       console.error("Logout error", err);
     }
