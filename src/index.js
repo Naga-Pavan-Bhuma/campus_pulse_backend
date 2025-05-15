@@ -26,6 +26,7 @@ const app = express();
 app.use(express.json());
 const allowedOrigins = [
   "http://localhost:3000",
+  "https://campus-pulse-frontend.vercel.app/",
   "https://campus-pulse-frontend-pka7tl43c-bhuma-naga-pavans-projects.vercel.app/"
 ];
 
