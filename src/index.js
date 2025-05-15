@@ -24,8 +24,15 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://campus-pulse-frontend-pka7tl43c-bhuma-naga-pavans-projects.vercel.app/"
+];
 
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
 app.use(
   session({
     secret: process.env.JWT_SECRET,
