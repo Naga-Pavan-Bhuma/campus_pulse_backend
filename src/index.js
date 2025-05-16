@@ -26,21 +26,34 @@ const app = express();
 app.use(express.json());
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://campus-pulse-frontend.vercel.app/",
-  "https://campus-pulse-frontend-pka7tl43c-bhuma-naga-pavans-projects.vercel.app/"
+  "https://campus-pulse-frontend.vercel.app",
+  "https://campus-pulse-frontend-pka7tl43c-bhuma-naga-pavans-projects.vercel.app"
 ];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
+
 app.use(
   session({
     secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production', // true in production (HTTPS), false in dev
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-site cookies in prod
+      httpOnly: true, // always true for security
+    },
   })
 );
+
 
 
 app.use(cookieParser());
