@@ -26,8 +26,7 @@ const app = express();
 app.use(express.json());
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://campus-pulse-frontend.vercel.app",
-  "https://campus-pulse-frontend-pka7tl43c-bhuma-naga-pavans-projects.vercel.app"
+  "https://campus-pulse-frontend.vercel.app"
 ];
 
 app.use(cors({
@@ -73,6 +72,14 @@ app.use('/timetable', timetableRouter); // Original timetable routes
 app.use('/faculty-timetable', facultyTimetableRouter); // New route for faculty timetable
 
 app.get("/user", async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ message: "User not authenticated" });
+  }
+
+  const { firstName, lastName, email, photoUrl } = req.user;
+  res.json({ firstName, lastName, email, photoUrl });
+});
+app.get("/me", async (req, res) => {
   if (!req.user) {
     return res.status(401).json({ message: "User not authenticated" });
   }
