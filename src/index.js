@@ -79,32 +79,6 @@ app.get("/user", async (req, res) => {
   const { firstName, lastName, email, photoUrl } = req.user;
   res.json({ firstName, lastName, email, photoUrl });
 });
-app.get("/me", async (req, res) => {
-  try {
-    const token = req.cookies.token;
-    if (!token) return res.status(401).json({ message: "Unauthorized" });
-
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    if (!payload) throw new Error("Invalid token");
-
-    // Try to find in each role
-    let user = await User.findById(payload._id);
-    if (user) return res.json({ userType: "student", user });
-
-    let faculty = await Faculty.findById(payload._id);
-    if (faculty) return res.json({ userType: "faculty", user: faculty });
-
-    let admin = await Admin.findById(payload._id);
-    if (admin) return res.json({ userType: "admin", user: admin });
-
-    return res.status(404).json({ message: "User not found" });
-  } catch (error) {
-    if (error.name === "TokenExpiredError") {
-      return res.status(401).json({ message: "Token expired" });
-    }
-    res.status(400).json({ message: error.message });
-  }
-});
 
 // Connect to DB and start server
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
