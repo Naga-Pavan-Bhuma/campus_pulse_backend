@@ -12,6 +12,13 @@ const authRouter = express.Router();
 // Utility to generate OTP
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
 
+const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production", // true in prod for HTTPS only
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+  expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+};
+
 // Google Auth Routes
 authRouter.get(
   "/auth/google",
@@ -26,7 +33,7 @@ authRouter.get(
   }),
   async (req, res) => {
     const token = await req.user.getJWT();
-    res.cookie("token", token, { expires: new Date(Date.now() + 900000) });
+    res.cookie("token", token, cookieOptions);
     res.redirect(`${process.env.FRONTEND_URL}/student`);
   }
 );
@@ -79,14 +86,8 @@ authRouter.post("/student/login", async (req, res) => {
     }
 
     const token = await user.getJWT();
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Lax",
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
-    });
+    res.cookie("token", token, cookieOptions);
 
-    // Send user data
     const userData = {
       firstName: user.firstName,
       lastName: user.lastName,
@@ -138,7 +139,7 @@ authRouter.post("/faculty/login", async (req, res) => {
     const isValidPassword = await faculty.isValidPassword(password);
     if (isValidPassword) {
       const token = await faculty.getJWT();
-      res.cookie("token", token, { expires: new Date(Date.now() + 900000) });
+      res.cookie("token", token, cookieOptions);
       res.send(faculty);
     } else {
       throw new Error("Invalid credentials");
@@ -160,7 +161,7 @@ authRouter.post("/admin/login", async (req, res) => {
     const isValidPassword = await admin.isValidPassword(password);
     if (isValidPassword) {
       const token = await admin.getJWT();
-      res.cookie("token", token, { expires: new Date(Date.now() + 900000) });
+      res.cookie("token", token, cookieOptions);
       res.send(admin);
     } else {
       throw new Error("Invalid credentials");
@@ -174,27 +175,21 @@ authRouter.post("/admin/signup", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check if the email already exists
     const existingAdmin = await Admin.findOne({ email });
     if (existingAdmin) {
       return res.status(400).send("Admin with this email already exists");
     }
 
-    // Create new admin
-    const newAdmin = new Admin({ email, password});
+    const newAdmin = new Admin({ email, password });
     await newAdmin.save();
 
-    // Generate JWT token
     const token = await newAdmin.getJWT();
-
-    // Send token in cookie
-    res.cookie("token", token, { expires: new Date(Date.now() + 900000), httpOnly: true });
+    res.cookie("token", token, cookieOptions);
     res.status(201).send(newAdmin);
   } catch (err) {
     res.status(500).send("ERROR: " + err.message);
   }
 });
-
 
 // OTP Verification
 authRouter.post("/verify-otp", async (req, res) => {
@@ -211,7 +206,7 @@ authRouter.post("/verify-otp", async (req, res) => {
     }
 
     user.isVerified = true;
-    user.otp = undefined; // Remove OTP after verification
+    user.otp = undefined;
     user.otpExpiry = undefined;
     await user.save();
 
@@ -270,13 +265,13 @@ authRouter.post("/refresh-token", async (req, res) => {
     }
 
     const payload = jwt.verify(refreshToken, process.env.JWT_SECRET);
-    const user = await User.findById(payload._id);  // Or Faculty/Admin
+    const user = await User.findById(payload._id); // Or Faculty/Admin
     if (!user) {
       return res.status(404).send("User not found");
     }
 
     const newToken = await user.getJWT();
-    res.cookie("token", newToken, { expires: new Date(Date.now() + 900000) });
+    res.cookie("token", newToken, cookieOptions);
 
     res.json({ message: "Token refreshed successfully" });
   } catch (err) {
